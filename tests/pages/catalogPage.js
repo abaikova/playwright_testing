@@ -1,8 +1,8 @@
 const ELECTRONICS_CLASSIFIER_ITEM_CSS_LOCATOR = 'li[data-id="1"]';
-const CATALOG_ONLINER_URL = 'https://catalog.onliner.by/';
-const MOBILE_PHONES_URL = CATALOG_ONLINER_URL + 'mobile';
+const MOBILE_PHONES_ASIDE_TITLE_CSS_SELECTOR = '.catalog-navigation-list__aside-title:has-text("Мобильные телефоны")';
+const MOBILE_PHONES_URL = 'a[href="https://catalog.onliner.by/mobile"]';
 
-class CatalogPage {
+exports.CatalogPage = class CatalogPage {
     constructor(page) {
         this.page = page;
     }
@@ -12,9 +12,7 @@ class CatalogPage {
     }
 
     async openMobilePhonePage() {
-        await this.page.click('.catalog-navigation-list__aside-title:has-text("Мобильные телефоны")');
-        await this.page.click(`a[href='${MOBILE_PHONES_URL}']`);
+        await this.page.click(MOBILE_PHONES_ASIDE_TITLE_CSS_SELECTOR);
+        await this.page.click(MOBILE_PHONES_URL);
     }
 }
-
-module.exports = {CatalogPage};
