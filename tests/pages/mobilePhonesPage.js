@@ -1,6 +1,6 @@
 const PRICE_CSS_SELECTOR = '.schema-product__price span[data-bind*="minPrice"]';
 const SCHEMA_ORDER_ID = '#schema-order';
-const DECS_SORTED_PRICE_OPTION = 'text=Дорогие';
+const DECS_SORTED_PRICE_OPTION = '.schema-order__list span:has-text("Дорогие")';
 const OPTIONS_PROCESSING_INDICATOR_CSS_SELECTOR = '.schema-products_processing';
 
 exports.MobilePhonesPage = class MobilePhonesPage {
