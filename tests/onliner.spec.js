@@ -1,26 +1,29 @@
 const {test, expect} = require('@playwright/test');
 const config = require('./test.config');
-const {MainPage} = require('../pages/mainPage');
+const {NavigationBar} = require('../pages/navBar');
 
 test.describe('O.BY SUITE >>', () => {
-    const CATALOG_PAGE_TAB_TITLE = config.params.catalogPageTitle;
-    const MOBILE_PHONES_PAGE_TAB_TITLE = config.params.mobilePageTitle;
-    const REGISTER_PAGE_TAB_TITLE = config.params.registerPageTitle;
+    const CATALOG_PAGE_TAB_TITLE = config.params.expectedTitles.catalogPage;
+    const MOBILE_PHONES_PAGE_TAB_TITLE = config.params.expectedTitles.mobilePage;
+    const REGISTER_PAGE_TAB_TITLE = config.params.expectedTitles.registerPage;
+    const CONSOLE_PAGE_TAB_TITLE = config.params.expectedTitles.consolePage;
 
-    let mainPage;
+    let navBar;
     let catalogPage;
     let mobilesPage;
     let loginPage;
+    let consolesPage;
+    let productPage;
+    let cartPage;
 
     test.beforeEach(async ({page}) => {
         await page.goto(config.params.url);
-        mainPage = new MainPage(page);
-
+        navBar = new NavigationBar(page);
     });
 
     test('TC-1: SORT BY PRICE', async ({page}) => {
         await test.step('Go to Onliner and open the catalog', async () => {
-            catalogPage = await mainPage.openCatalog();
+            catalogPage = await navBar.openCatalog();
             await expect(page).toHaveTitle(CATALOG_PAGE_TAB_TITLE);
         });
 
@@ -43,7 +46,7 @@ test.describe('O.BY SUITE >>', () => {
 
     test('TC-2: CHECK LOGIN FORM', async ({page}) => {
         await test.step('Go to Sign In -> Register', async () => {
-            loginPage = await mainPage.openLoginPage();
+            loginPage = await navBar.openLoginPage();
             await loginPage.openRegistrationForm();
             await expect(page).toHaveTitle(REGISTER_PAGE_TAB_TITLE);
         });
@@ -62,6 +65,31 @@ test.describe('O.BY SUITE >>', () => {
             await loginPage.typeNewPassword(params.newPassword);
             await loginPage.repeatNewPassword(params.incorrectNewPassword);
             await expect(page.locator(params.incorrectPasswordsErrorSelector)).toContainText(params.expectedErrorForDifferentPasswords);
+        });
+    });
+
+    test('TC-3: ADD TO CART', async ({page}) => {
+        await test.step('Open the Catalog', async () => {
+            catalogPage = await navBar.openCatalog();
+            await expect(page).toHaveTitle(CATALOG_PAGE_TAB_TITLE);
+        });
+
+        await test.step('Go to Gaming Consoles', async () => {
+            await catalogPage.expandElectronicsTab();
+            consolesPage = await catalogPage.openGamingConsolesPage();
+
+            await expect(page).toHaveTitle(CONSOLE_PAGE_TAB_TITLE);
+        });
+
+        await test.step('Select the first result and add it to the cart', async () => {
+            productPage = await consolesPage.openFirstItemInGroup();
+            await productPage.addProductToCart();
+            await expect(productPage.addToCartButton).toHaveText(config.params.expectedButtonText);
+        });
+
+        await test.step('Check that the product is in the cart', async () => {
+            cartPage = await navBar.openCartPage();
+            await expect(cartPage.productData).toContainText(config.params.expectedProductData);
         });
     });
 });

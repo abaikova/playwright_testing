@@ -1,4 +1,4 @@
-const REGISTRATION_LINK = 'a[href="https://profile.onliner.by/registration"]';
+const REGISTRATION_LINK_CSS_SELECTOR = 'a[href="https://profile.onliner.by/registration"]';
 const EMAIL_INPUT_CSS_SELECTOR = 'input[type=email]';
 const PSWD_INPUT_CSS_SELECTOR = 'input[type=password]';
 const NEW_PSWD_INPUT_CSS_SELECTOR = PSWD_INPUT_CSS_SELECTOR + '[placeholder="Придумайте пароль"]';
@@ -11,7 +11,7 @@ exports.LoginPage = class LoginPage {
     }
 
     async openRegistrationForm() {
-        await this.page.click(REGISTRATION_LINK);
+        await this.page.click(REGISTRATION_LINK_CSS_SELECTOR);
     }
 
     async typeEmail(email) {

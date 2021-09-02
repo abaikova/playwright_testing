@@ -5,10 +5,13 @@ const config = {
     },
     params: {
         url: 'https://www.onliner.by/',
-        catalogPageTitle: /Каталог/,
-        mobilePageTitle: /Мобильный телефон/,
+        expectedTitles: {
+            catalogPage: /Каталог/,
+            mobilePage: /Мобильный телефон/,
+            registerPage: /Профиль/,
+            consolePage: /Игровую приставку/,
+        },
         mobileManufacturer: 'HONOR',
-        registerPageTitle: /Профиль/,
         invalidEmail: 'dkhfbvkdn',
         expectedErrorForEmailInput: 'Некорректный e-mail',
         invalidPassword: '1234',
@@ -16,10 +19,11 @@ const config = {
         newPassword: '12345678',
         incorrectNewPassword: '12345677',
         expectedErrorForDifferentPasswords: 'Пароли не совпадают',
-
         emailFormDescriptionErrorSelector: '.auth-form__field:has([type=email]) .auth-form__description_error',
         shortPswdFormNotificationSelector: '.auth-form__securebox_condensed .auth-form__description_primary:below(.auth-form__row:has([type=password]))',
         incorrectPasswordsErrorSelector: '.auth-form__field:has([type=password]) .auth-form__description_error',
+        expectedButtonText: 'В корзине',
+        expectedProductData: 'Игровые приставки',
     }
 };
 
