@@ -20,6 +20,6 @@ blocks:
         - name: Unit tests
           commands:
             - echo 'running unit tests'
-        - name: Integration tests
+        - name: Actual tests
           commands:
-            - echo 'running integration tests'
+            - npx playwright test
