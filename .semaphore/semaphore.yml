@@ -5,21 +5,23 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: 'Block #1'
+  - name: Install dependencies
     task:
       jobs:
-        - name: 'Job #1'
+        - name: install npm and playwright
           commands:
-            - checkout
-  - name: Tests
+            - npm install
+            - npm i -D @playwright/test
+            - npx playwright install
+      prologue:
+        commands:
+          - checkout
+  - name: tests
     task:
       prologue:
         commands:
           - checkout
-          - npm install
-          - npm i -D @playwright/test
-          - npx playwright install
       jobs:
-        - name: Actual tests
+        - name: O.BY
           commands:
             - npx playwright test
