@@ -18,9 +18,6 @@ blocks:
           - checkout
   - name: tests
     task:
-      prologue:
-        commands:
-          - checkout
       jobs:
         - name: O.BY
           commands:
