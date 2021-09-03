@@ -16,10 +16,10 @@ blocks:
       prologue:
         commands:
           - checkout
+          - npm install
+          - npm i -D @playwright/test
+          - npx playwright install
       jobs:
-        - name: Unit tests
-          commands:
-            - echo 'running unit tests'
         - name: Actual tests
           commands:
             - npx playwright test
