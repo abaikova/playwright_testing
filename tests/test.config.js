@@ -10,6 +10,7 @@ const config = {
             mobilePage: /Мобильный телефон/,
             registerPage: /Профиль/,
             consolePage: /Игровую приставку/,
+            servicesPage: /Заказы на услуги/,
         },
         mobileManufacturer: 'HONOR',
         invalidEmail: 'dkhfbvkdn',
@@ -24,6 +25,9 @@ const config = {
         incorrectPasswordsErrorSelector: '.auth-form__field:has([type=password]) .auth-form__description_error',
         expectedButtonText: 'В корзине',
         expectedProductData: 'Игровые приставки',
+        serviceCheckboxStatus: 'Невыполненные',
+        expectedServiceStatus: 'Не выполнено',
+
     }
 };
 

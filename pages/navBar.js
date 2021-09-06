@@ -1,18 +1,20 @@
-const CATALOG_CSS_LOCATOR = `ul.b-main-navigation a[href="https://catalog.onliner.by/"]`;
+const CATALOG_CSS_LOCATOR = 'a[href="https://catalog.onliner.by/"].b-main-navigation__link';
 const CART_CSS_LOCATOR = 'a[href="https://cart.onliner.by"][title="Корзина"]';
+const SERVICES_CSS_LOCATOR = 'a[href="https://s.onliner.by/tasks"].b-main-navigation__link';
 const CATALOG_WIDGETS_PANEL_CSS_LOCATOR = '.catalog-content.js-scrolling-area';
 const LOGIN_BUTTON_CSS_LOCATOR = '#userbar .auth-bar__item:has-text("Вход")';
 
 const {LoginPage} = require('./loginPage');
 const {CatalogNavigationPage} = require('./catalogNavigationPage');
 const {CartPage} = require('./cartPage')
+const {ServicesPage} = require("./servicesPage");
 
 exports.NavigationBar = class NavigationBar {
     constructor(page) {
         this.page = page;
     }
 
-    async openCatalog() {
+    async openCatalogNavPage() {
         await this.page.click(CATALOG_CSS_LOCATOR);
         await this.page.waitForSelector(CATALOG_WIDGETS_PANEL_CSS_LOCATOR);
         return new CatalogNavigationPage(this.page);
@@ -26,5 +28,10 @@ exports.NavigationBar = class NavigationBar {
     async openCartPage() {
         await this.page.click(CART_CSS_LOCATOR);
         return new CartPage(this.page);
+    }
+
+    async openServicesPage() {
+        await this.page.click(SERVICES_CSS_LOCATOR);
+        return new ServicesPage(this.page);
     }
 }
