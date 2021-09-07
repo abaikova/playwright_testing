@@ -23,8 +23,8 @@ exports.CatalogNavigationPage = class CatalogNavigationPage {
     }
 
     async openGamingConsolesPage() {
-        await this.page.click(VIDEO_GAMES_ASIDE_TITLE_SELECTOR);
-        await this.page.click(CONSOLES_PHONES_CATEGORY_CSS_SELECTOR);
+        await this.page.locator(VIDEO_GAMES_ASIDE_TITLE_SELECTOR).click();
+        await this.page.locator(CONSOLES_PHONES_CATEGORY_CSS_SELECTOR).click();
         return new ConsolesPage(this.page);
     }
 }

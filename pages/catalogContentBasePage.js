@@ -5,6 +5,7 @@ const SCHEMA_ORDER_ID = '#schema-order';
 const DECS_SORTED_PRICE_OPTION = '.schema-order__list span:has-text("Дорогие")';
 const OPTIONS_PROCESSING_INDICATOR_CSS_SELECTOR = '.schema-products_processing';
 const PRODUCT_TITLE_CSS_SELECTOR = '.schema-product__title';
+const MANUFACTURER_FILTER_SELECTOR = ':has-text("Производитель")';
 
 class CatalogContentBasePage {
     constructor(page) {
@@ -13,12 +14,10 @@ class CatalogContentBasePage {
 
     async selectManufacturerFromListOfAvailable(...phoneLabels) {
         for (const phoneLabel of phoneLabels) {
-            const checkboxSelector = `li:has-text("${phoneLabel}") .schema-filter__checkbox-item .i-checkbox .i-checkbox__faux`;
-
-            await Promise.all([
-                this.page.waitForNavigation(),
-                this.page.click(checkboxSelector)
-            ]);
+            const statusSelector = MANUFACTURER_FILTER_SELECTOR + ` li:has-text("${phoneLabel}") .i-checkbox__faux`;
+            const checkbox = this.page.locator(statusSelector);
+            await checkbox.click();
+            await this.page.waitForSelector(OPTIONS_PROCESSING_INDICATOR_CSS_SELECTOR, {state: "detached"});
         }
     }
 

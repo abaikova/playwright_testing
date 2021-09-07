@@ -1,15 +1,18 @@
 {
   "name": "playwright_testing",
   "version": "1.0.0",
-  "description": "",
+  "description": "Playing with the Playwright and JS for the first time",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test --config=tests/playwright.config.js",
+    "posttest": "allure generate ./allure-results --clean"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alina Baikova",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.14.1"
+    "@playwright/test": "^1.14.1",
+    "experimental-allure-playwright": "0.0.3",
+    "allure-commandline": "^2.13.8"
   }
 }

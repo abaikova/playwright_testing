@@ -1,13 +1,13 @@
 const {test, expect} = require('@playwright/test');
-const config = require('./test.config');
+const params = require('./parameters');
 const {NavigationBar} = require('../pages/navBar');
 
 test.describe('O.BY SUITE >>', () => {
-    const CATALOG_PAGE_TAB_TITLE = config.params.expectedTitles.catalogPage;
-    const MOBILE_PHONES_PAGE_TAB_TITLE = config.params.expectedTitles.mobilePage;
-    const REGISTER_PAGE_TAB_TITLE = config.params.expectedTitles.registerPage;
-    const CONSOLE_PAGE_TAB_TITLE = config.params.expectedTitles.consolePage;
-    const SERVICES_PAGE_TAB_TITLE = config.params.expectedTitles.servicesPage;
+    const CATALOG_PAGE_TAB_TITLE = params.expectedTitles.catalogPage;
+    const MOBILE_PHONES_PAGE_TAB_TITLE = params.expectedTitles.mobilePage;
+    const REGISTER_PAGE_TAB_TITLE = params.expectedTitles.registerPage;
+    const CONSOLE_PAGE_TAB_TITLE = params.expectedTitles.consolePage;
+    const SERVICES_PAGE_TAB_TITLE = params.expectedTitles.servicesPage;
 
     let navBar;
     let catalogPage;
@@ -19,7 +19,7 @@ test.describe('O.BY SUITE >>', () => {
     let servicesPage;
 
     test.beforeEach(async ({page}) => {
-        await page.goto(config.params.url);
+        await page.goto(params.url);
         navBar = new NavigationBar(page);
     });
 
@@ -37,7 +37,7 @@ test.describe('O.BY SUITE >>', () => {
         });
 
         await test.step('Select a manufacturer and sort by price', async () => {
-            const requiredMobile = config.params.mobileManufacturer;
+            const requiredMobile = params.mobileManufacturer;
 
             await mobilesPage.selectManufacturerFromListOfAvailable(requiredMobile);
             const prices = await mobilesPage.sortByPriceDescAndReturnData();
@@ -53,17 +53,17 @@ test.describe('O.BY SUITE >>', () => {
             await expect(page).toHaveTitle(REGISTER_PAGE_TAB_TITLE);
         });
 
-        await test.step('Type an invalid email', async (params = config.params) => {
+        await test.step('Type an invalid email', async () => {
             await loginPage.typeEmail(params.invalidEmail);
             await expect(page.locator(params.emailFormDescriptionErrorSelector)).toContainText(params.expectedErrorForEmailInput);
         });
 
-        await test.step('Type an invalid password', async (params = config.params) => {
+        await test.step('Type an invalid password', async () => {
             await loginPage.typeNewPassword(params.invalidPassword);
             await expect(page.locator(params.shortPswdFormNotificationSelector)).toContainText(params.expectedErrorForPswdInput);
         });
 
-        await test.step('Type different password during registration', async (params = config.params) => {
+        await test.step('Type different password during registration', async () => {
             await loginPage.typeNewPassword(params.newPassword);
             await loginPage.repeatNewPassword(params.incorrectNewPassword);
             await expect(page.locator(params.incorrectPasswordsErrorSelector)).toContainText(params.expectedErrorForDifferentPasswords);
@@ -86,16 +86,16 @@ test.describe('O.BY SUITE >>', () => {
         await test.step('Select the first result and add it to the cart', async () => {
             productPage = await consolesPage.openFirstItemInGroup();
             await productPage.addProductToCart();
-            await expect(productPage.addToCartButton).toHaveText(config.params.expectedButtonText);
+            await expect(productPage.getAddToCartButton()).toHaveText(params.expectedButtonText);
         });
 
         await test.step('Check that the product is in the cart', async () => {
             cartPage = await navBar.openCartPage();
-            await expect(cartPage.productData).toContainText(config.params.expectedProductData);
+            await expect(cartPage.productData).toContainText(params.expectedProductData);
         });
     });
 
-    test.only('TC-4: CHECK SERVICES', async ({page}) => {
+    test('TC-4: CHECK SERVICES', async ({page}) => {
         let listOfStatuses;
 
         await test.step('Open the Services', async () => {
@@ -104,19 +104,18 @@ test.describe('O.BY SUITE >>', () => {
         });
 
         await test.step('Select the status of a service', async () => {
-            await servicesPage.selectStatusOfService(config.params.serviceCheckboxStatus);
+            await servicesPage.selectStatusOfService(params.serviceCheckboxStatus);
             listOfStatuses = await servicesPage.getListOfStatuses();
 
-            await expect(servicesPage.areListedServicesHaveStatus(listOfStatuses, config.params.expectedServiceStatus)).toBeTruthy();
+            await expect(servicesPage.areListedServicesHaveStatus(listOfStatuses, params.expectedServiceStatus)).toBeTruthy();
         });
 
         await test.step('Check the amount of services', async () => {
-            const amountOfServices = await servicesPage.listedServices.count();
-            expect(amountOfServices).toBeGreaterThan(0);     // todo: update to a more elegant solution
+            expect(await servicesPage.getAmountOfListedServices()).toBeGreaterThan(0);
         });
 
         await test.step('Check that each service contains an image', async () => {
-
+            expect(await servicesPage.areListedServicesHaveImage()).toBeTruthy();
         });
     });
 });

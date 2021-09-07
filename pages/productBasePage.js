@@ -3,10 +3,13 @@ const ADD_TO_CART_BUTTON_SELECTOR = '.product-aside__item--highlighted.state_add
 exports.ProductBasePage = class ProductBasePage {
     constructor(page) {
         this.page = page;
-        this.addToCartButton = this.page.locator(ADD_TO_CART_BUTTON_SELECTOR);
+    }
+
+    getAddToCartButton() {
+        return this.page.locator(ADD_TO_CART_BUTTON_SELECTOR);
     }
 
     async addProductToCart() {
-        await this.addToCartButton.click();
+        await this.getAddToCartButton().click();
     }
 }
