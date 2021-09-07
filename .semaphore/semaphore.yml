@@ -11,12 +11,13 @@ blocks:
         - name: Run O.BY test cases
           commands:
             - npm run test
-        - name: Generate an Allure report
-          commands:
-            - npm run posttest
       prologue:
         commands:
           - checkout
           - npm install
           - npm i -D @playwright/test
           - npx playwright install
+      epilogue:
+        always:
+          commands:
+            - npm run posttest
