@@ -8,9 +8,12 @@ blocks:
   - name: Test Cases
     task:
       jobs:
-        - name: O.BY
+        - name: Run O.BY test cases
           commands:
-            - npx playwright test
+            - npm run test
+        - name: Generate an Allure report
+          commands:
+            - npm run posttest
       prologue:
         commands:
           - checkout
