@@ -6,9 +6,8 @@ const config = {
     ],
     use: {
         browserName: 'chromium',
-        trace: 'on',
+        headless: false,
         screenshot: 'only-on-failure',
-        video: 'on-first-retry',
     },
 };
 module.exports = config;

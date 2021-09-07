@@ -21,3 +21,7 @@ blocks:
         always:
           commands:
             - npm run posttest
+            - artifact push job allure-report/index.html
+        on_fail:
+          commands:
+            - artifact push job test-results
