@@ -4,7 +4,7 @@
   "description": "Playing with the Playwright and JS for the first time",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test --config=tests/playwright.config.js",
+    "test": "npx playwright test --config=tests/playwright.config.js",
     "posttest": "allure generate ./allure-results --clean"
   },
   "keywords": [],
