@@ -22,9 +22,10 @@ exports.ServicesPage = class ServicesPage {
         return (allTextContent).map(item => item.trim());
     }
 
-    getAmountOfListedServices() {
-        this.page.waitForNavigation();
-        return this.page.locator(SERVICE_ITEM_CSS_SELECTOR).count();
+    async getAmountOfListedServices() {
+        await this.page.waitForSelector(SERVICE_ITEM_CSS_SELECTOR, {state: "attached"});
+        const amount = await this.page.locator(SERVICE_ITEM_CSS_SELECTOR).count();
+        return Number(amount);
     }
 
     async areListedServicesHaveStatus(statuses, expectedStatus) {

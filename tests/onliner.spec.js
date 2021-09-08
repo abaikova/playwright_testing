@@ -91,13 +91,12 @@ test.describe('O.BY SUITE >>', () => {
 
         await test.step('Check that the product is in the cart', async () => {
             cartPage = await navBar.openCartPage();
-            await expect(cartPage.productData).toContainText(params.expectedProductData);
+            const productData = await cartPage.getProductData();
+            await expect(productData).toContainText(params.expectedProductData);
         });
     });
 
     test('TC-4: CHECK SERVICES', async ({page}) => {
-        let listOfStatuses;
-
         await test.step('Open the Services', async () => {
             servicesPage = await navBar.openServicesPage();
             await expect(page).toHaveTitle(SERVICES_PAGE_TAB_TITLE);
@@ -105,13 +104,14 @@ test.describe('O.BY SUITE >>', () => {
 
         await test.step('Select the status of a service', async () => {
             await servicesPage.selectStatusOfService(params.serviceCheckboxStatus);
-            listOfStatuses = await servicesPage.getListOfStatuses();
+            let listOfStatuses = await servicesPage.getListOfStatuses();
 
             await expect(servicesPage.areListedServicesHaveStatus(listOfStatuses, params.expectedServiceStatus)).toBeTruthy();
         });
 
         await test.step('Check the amount of services', async () => {
-            expect(await servicesPage.getAmountOfListedServices()).toBeGreaterThan(0);
+            const actualAmount = await servicesPage.getAmountOfListedServices();
+            expect(actualAmount).toBeGreaterThan(0);
         });
 
         await test.step('Check that each service contains an image', async () => {
