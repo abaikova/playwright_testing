@@ -18,12 +18,22 @@ test.describe('O.BY SUITE >>', () => {
     let cartPage;
     let servicesPage;
 
-    test.beforeEach(async ({page}) => {
+    let page
+
+    test.beforeEach(async ({context}) => {
+        page = await context.newPage();
+        await context.route('**/*', route => {
+            if (route.request().frame().parentFrame()) {
+                route.abort();
+            } else {
+                route.continue();
+            }
+        });
         await page.goto(params.url);
         navBar = new NavigationBar(page);
     });
 
-    test('TC-1: SORT BY PRICE', async ({page}) => {
+    test('TC-1: SORT BY PRICE', async () => {
         await test.step('Go to Onliner and open the catalog', async () => {
             catalogPage = await navBar.openCatalogNavPage();
             await expect(page).toHaveTitle(CATALOG_PAGE_TAB_TITLE);
@@ -46,7 +56,7 @@ test.describe('O.BY SUITE >>', () => {
         });
     });
 
-    test('TC-2: CHECK LOGIN FORM', async ({page}) => {
+    test('TC-2: CHECK LOGIN FORM', async () => {
         await test.step('Go to Sign In -> Register', async () => {
             loginPage = await navBar.openLoginPage();
             await loginPage.openRegistrationForm();
@@ -70,7 +80,7 @@ test.describe('O.BY SUITE >>', () => {
         });
     });
 
-    test('TC-3: ADD TO CART', async ({page}) => {
+    test('TC-3: ADD TO CART', async () => {
         await test.step('Open the Catalog', async () => {
             catalogPage = await navBar.openCatalogNavPage();
             await expect(page).toHaveTitle(CATALOG_PAGE_TAB_TITLE);
@@ -96,7 +106,7 @@ test.describe('O.BY SUITE >>', () => {
         });
     });
 
-    test('TC-4: CHECK SERVICES', async ({page}) => {
+    test('TC-4: CHECK SERVICES', async () => {
         await test.step('Open the Services', async () => {
             servicesPage = await navBar.openServicesPage();
             await expect(page).toHaveTitle(SERVICES_PAGE_TAB_TITLE);
@@ -118,4 +128,28 @@ test.describe('O.BY SUITE >>', () => {
             expect(await servicesPage.areListedServicesHaveImage()).toBeTruthy();
         });
     });
+
+    test('TC-5: Go to Forum and verify the main features', async () => {
+        let forumPage;
+
+        await test.step('Go to Forum', async () => {
+            forumPage = await navBar.openForumPage();
+            await expect(page).toHaveTitle(params.expectedTitles.forumPage);
+        });
+
+        await test.step('Go to tab "Новое за 24 часа"', async () => {
+            await forumPage.openLastPostsTab();
+            await expect(page.locator(params.forumTitleSelector)).toContainText(params.expectedForumTitle);
+        });
+
+        await test.step('Verify the amount of found topics', async () => {
+            const topicsCount = await forumPage.getAmountOfTopicsOnPage();
+            expect(topicsCount).toBeGreaterThan(1);
+        });
+
+        await test.step('Verify the date and time of the topics on the last page', async () => {
+            await forumPage.openTheLastPage();
+            expect(await forumPage.areTopicsCreatedLessThan24HoursAgo()).toBeTruthy();
+        });
+    })
 });

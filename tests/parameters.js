@@ -6,6 +6,7 @@ const params = {
         registerPage: /Профиль/,
         consolePage: /Игровую приставку/,
         servicesPage: /Заказы на услуги/,
+        forumPage: /Форум onliner.by/,
     },
     mobileManufacturer: 'HONOR',
     invalidEmail: 'dkhfbvkdn',
@@ -22,5 +23,7 @@ const params = {
     expectedProductData: 'Игровые приставки',
     serviceCheckboxStatus: 'Невыполненные',
     expectedServiceStatus: 'Не выполнено',
+    expectedForumTitle: 'Новое за 24 часа',
+    forumTitleSelector: 'h1.m-title',
 };
 module.exports = params;
