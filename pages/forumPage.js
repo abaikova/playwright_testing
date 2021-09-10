@@ -25,8 +25,8 @@ exports.ForumPage = class ForumPage {
             return Math.ceil(amountOfFoundItems / amountOfTopics);
         }
 
-        const underTitleElement = await this.page.locator(AMOUNT_OF_FOUND_TOPICS_UNDER_TITLE_CSS_SELECTOR);
-        const amountOfFoundItemsText = String(underTitleElement.evaluate(node => node.textContent));
+        const underTitleElement = this.page.locator(AMOUNT_OF_FOUND_TOPICS_UNDER_TITLE_CSS_SELECTOR);
+        const amountOfFoundItemsText = String(await underTitleElement.evaluate(node => node.textContent));
         const amountOfTopics = Number(await this.getAmountOfTopicsOnPage());
         const lastPageIndex = numberOfLastPage(amountOfFoundItemsText, amountOfTopics)
         await this.openPage(lastPageIndex);
@@ -35,8 +35,8 @@ exports.ForumPage = class ForumPage {
     async openPage(pageNumber) {
         const selector = `[class="b-hdtopic"] li:has-text("${pageNumber}")`;
         await Promise.all([
-            this.page.waitForNavigation(),
             this.page.locator(selector).click(),
+            this.page.waitForNavigation(),
         ]);
     }
 

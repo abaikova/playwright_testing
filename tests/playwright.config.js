@@ -6,10 +6,11 @@ const config = {
         ['experimental-allure-playwright']
     ],
     use: {
-        ignoreHTTPSErrors: true,
+        baseURL: 'https://www.onliner.by/',
         browserName: 'chromium',
-        // headless: false,
+        headless: false,
         screenshot: 'only-on-failure',
     },
+    workers: 2,
 };
 module.exports = config;

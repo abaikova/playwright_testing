@@ -1,5 +1,4 @@
 const params = {
-    url: 'https://www.onliner.by/',
     expectedTitles: {
         catalogPage: /Каталог/,
         mobilePage: /Мобильный телефон/,
