@@ -11,6 +11,7 @@ git clone https://github.com/bkvtrash/playwright_testing.git
 ```shell
 npm install
 npm i -D @playwright/test
+npm i -D experimental-allure-playwright
 npx playwright install
 ```
 3. Run the tests:
@@ -21,7 +22,7 @@ npx playwright test --config=tests/playwright.config.js
 ```shell
 npx allure generate ./allure-results --clean
 ```
-5. Open the reqport:
+5. Open the report:
 ```shell
 npx allure open ./allure-report
 ```

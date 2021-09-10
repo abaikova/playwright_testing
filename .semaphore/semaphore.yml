@@ -16,6 +16,7 @@ blocks:
           - checkout
           - npm install
           - npm i -D @playwright/test
+          - npm i -D experimental-allure-playwright
           - npx playwright install
       epilogue:
         always:
