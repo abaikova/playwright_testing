@@ -1,28 +1,35 @@
-const params = {
-    expectedTitles: {
-        catalogPage: /Каталог/,
-        mobilePage: /Мобильный телефон/,
-        registerPage: /Профиль/,
-        consolePage: /Игровую приставку/,
-        servicesPage: /Заказы на услуги/,
-        forumPage: /Форум onliner.by/,
+module.exports = testParameters = {
+    testCases: {
+        expectedTitles: {
+            catalogPage: /Каталог/,
+            mobilePage: /Мобильный телефон/,
+            registerPage: /Профиль/,
+            consolePage: /Игровую приставку/,
+            servicesPage: /Заказы на услуги/,
+            forumPage: /Форум onliner.by/,
+        },
+        first: {
+            mobileManufacturer: 'HONOR',
+        },
+        second: {
+            invalidEmail: 'dkhfbvkdn',
+            expectedErrorForEmailInput: 'Некорректный e-mail',
+            invalidPassword: '1234',
+            expectedErrorForPswdInput: 'Минимум 8 символов',
+            newPassword: '12345678',
+            incorrectNewPassword: '12345677',
+            expectedErrorForDifferentPasswords: 'Пароли не совпадают',
+        },
+        third: {
+            expectedButtonText: 'В корзине',
+            expectedProductData: 'Игровые приставки',
+        },
+        fourth: {
+            serviceCheckboxStatus: 'Невыполненные',
+            expectedServiceStatus: 'Не выполнено',
+        },
+        fifth: {
+            expectedForumTitle: 'Новое за 24 часа',
+        },
     },
-    mobileManufacturer: 'HONOR',
-    invalidEmail: 'dkhfbvkdn',
-    expectedErrorForEmailInput: 'Некорректный e-mail',
-    invalidPassword: '1234',
-    expectedErrorForPswdInput: 'Минимум 8 символов',
-    newPassword: '12345678',
-    incorrectNewPassword: '12345677',
-    expectedErrorForDifferentPasswords: 'Пароли не совпадают',
-    emailFormDescriptionErrorSelector: '.auth-form__field:has([type=email]) .auth-form__description_error',
-    shortPswdFormNotificationSelector: '.auth-form__securebox_condensed .auth-form__description_primary:below(.auth-form__row:has([type=password]))',
-    incorrectPasswordsErrorSelector: '.auth-form__field:has([type=password]) .auth-form__description_error',
-    expectedButtonText: 'В корзине',
-    expectedProductData: 'Игровые приставки',
-    serviceCheckboxStatus: 'Невыполненные',
-    expectedServiceStatus: 'Не выполнено',
-    expectedForumTitle: 'Новое за 24 часа',
-    forumTitleSelector: 'h1.m-title',
 };
-module.exports = params;

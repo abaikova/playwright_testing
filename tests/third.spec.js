@@ -1,23 +1,26 @@
 const test = require('./base.spec');
-const params = require('./parameters');
+const parameters = require('./parameters');
 const {expect} = require("@playwright/test");
 
 
 test('TC-3: ADD TO CART', async ({page, navBar}) => {
+    const expectedTitles = parameters.testCases.expectedTitles;
+    const params = parameters.testCases.third;
+
     let catalogPage;
     let consolesPage;
     let productPage;
 
     await test.step('Open the Catalog', async () => {
         catalogPage = await navBar.openCatalogNavPage();
-        await expect(page).toHaveTitle(params.expectedTitles.catalogPage);
+        await expect(page).toHaveTitle(expectedTitles.catalogPage);
     });
 
     await test.step('Go to Gaming Consoles', async () => {
         await catalogPage.expandElectronicsTab();
         consolesPage = await catalogPage.openGamingConsolesPage();
 
-        await expect(page).toHaveTitle(params.expectedTitles.consolePage);
+        await expect(page).toHaveTitle(expectedTitles.consolePage);
     });
 
     await test.step('Select the first result and add it to the cart', async () => {

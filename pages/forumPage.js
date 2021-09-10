@@ -1,7 +1,8 @@
 const LAST_POSTS_CSS_SELECTOR = 'a[href="/search.php?type=lastposts&time=86400"]';
 const LIST_TOPIC_ITEM_CSS_SELECTOR = '.b-list-topics li';
 const LIST_TOPIC_ITEM_UPDATE_TIME_CSS_SELECTOR = LIST_TOPIC_ITEM_CSS_SELECTOR + '.link-getlast';
-const AMOUNT_OF_FOUND_TOPICS_UNDER_TITLE_CSS_SELECTOR = 'h1.m-title span';
+const TITLE_CSS_SELECTOR = 'h1.m-title';
+const AMOUNT_OF_FOUND_TOPICS_UNDER_TITLE_CSS_SELECTOR = TITLE_CSS_SELECTOR + ' span';
 
 exports.ForumPage = class ForumPage {
     constructor(page) {
@@ -13,6 +14,10 @@ exports.ForumPage = class ForumPage {
         await link.click();
     }
 
+    async getForumTitle() {
+        return await this.page.locator(TITLE_CSS_SELECTOR);
+    }
+
     async getAmountOfTopicsOnPage() {
         const elements = this.page.locator(LIST_TOPIC_ITEM_CSS_SELECTOR);
         return await elements.evaluateAll((lis) => lis.length);
@@ -20,6 +25,7 @@ exports.ForumPage = class ForumPage {
 
     async openTheLastPage() {
         const numberOfLastPage = (amountOfFoundItemsText, amountOfTopics) => {
+            // divide the amount of all found topics by the amount of topics on a single page to get the amount of pages and select the last
             const extractDigitsRegex = /(\d+)/g;
             const amountOfFoundItems = amountOfFoundItemsText.match(extractDigitsRegex);
             return Math.ceil(amountOfFoundItems / amountOfTopics);
@@ -43,7 +49,8 @@ exports.ForumPage = class ForumPage {
         let areCreated24HoursAgo = true;
         for (let i = 0; i < topicsCount.length; i++) {
             const timeUpdateNote = topicsCount[i];
-            if (!timeUpdateNote.match(/((минут|секунд)[уы]?)|(час[ова]*)/g)) {
+            const minutesAndSecondsAndHoursRegex = /((минут|секунд)[уы]?)|(час[ова]*)/g;
+            if (!timeUpdateNote.match(minutesAndSecondsAndHoursRegex)) {
                 areCreated24HoursAgo = false;
                 break;
             }

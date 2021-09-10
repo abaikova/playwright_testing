@@ -1,5 +1,5 @@
-const config = {
-    // timeout: 30000,
+module.exports = config = {
+    timeout: 60000,
     retries: 1,
     reporter: [
         ['line'],
@@ -14,4 +14,3 @@ const config = {
     },
     workers: 1,
 };
-module.exports = config;

@@ -1,14 +1,17 @@
 const test = require('./base.spec');
-const params = require('./parameters');
+const parameters = require('./parameters');
 const {expect} = require("@playwright/test");
 
 
 test('TC-4: CHECK SERVICES', async ({page, navBar}) => {
+    const expectedTitles = parameters.testCases.expectedTitles;
+    const params = parameters.testCases.fourth;
+
     let servicesPage;
 
     await test.step('Open the Services', async () => {
         servicesPage = await navBar.openServicesPage();
-        await expect(page).toHaveTitle(params.expectedTitles.servicesPage);
+        await expect(page).toHaveTitle(expectedTitles.servicesPage);
     });
 
     await test.step('Select the status of a service', async () => {
