@@ -34,10 +34,7 @@ exports.ForumPage = class ForumPage {
 
     async openPage(pageNumber) {
         const selector = `[class="b-hdtopic"] li:has-text("${pageNumber}")`;
-        await Promise.all([
-            this.page.locator(selector).click(),
-            this.page.waitForNavigation(),
-        ]);
+        await this.page.locator(selector).click();
     }
 
     async areTopicsCreatedLessThan24HoursAgo() {

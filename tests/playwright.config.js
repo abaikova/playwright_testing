@@ -1,8 +1,9 @@
 const config = {
-    timeout: 30000,
+    // timeout: 30000,
     retries: 1,
     reporter: [
-        ['list'],
+        ['line'],
+        ['json', {  outputFile: 'test-results/output.json' }],
         ['experimental-allure-playwright']
     ],
     use: {
@@ -11,6 +12,6 @@ const config = {
         headless: false,
         screenshot: 'only-on-failure',
     },
-    workers: 2,
+    workers: 1,
 };
 module.exports = config;

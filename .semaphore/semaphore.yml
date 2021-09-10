@@ -23,6 +23,7 @@ blocks:
           commands:
             - npm run posttest
             - artifact push job allure-report
+            - artifact push job test-results/output.json
         on_fail:
           commands:
             - artifact push job test-results
