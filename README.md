@@ -21,3 +21,8 @@ npx playwright test --config=tests/playwright.config.js
 ```shell
 npx allure generate ./allure-results --clean
 ```
+5. Open the reqport:
+```shell
+npx allure open ./allure-report
+```
+Press <Ctrl+C> to exit in a terminal.
